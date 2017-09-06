@@ -1,4 +1,7 @@
 # coding=utf-8
+from collections import defaultdict
+import numpy as np
+
 class DNA:
     def __init__(self, dnaString):
         self.dna = dnaString
@@ -17,6 +20,24 @@ class DNA:
                 count = count + 1
         return count
 
+    def minimizeSkew(self, start, end):
+        genome = self.dna[start:end]
+        currentSkew = 0
+        minSkews = [[1, -1]]
+        
+        for i, c in enumerate(genome):
+            if c == 'C':
+                currentSkew = currentSkew - 1
+            elif c == 'G':
+                currentSkew = currentSkew + 1
+            if currentSkew == minSkews[0][0]:
+                # i + 1 because http://rosalind.info/problems/ba1f/?class=431
+                # does not expect indices, but rather the length of the substring
+                minSkews.append([currentSkew, i + 1])
+            elif currentSkew < minSkews[0][0]:
+                minSkews = [[currentSkew, i + 1]]
+        return minSkews
+
     def reverseCompliment(self):
         result = [] 
         for c in self.dna:
@@ -31,5 +52,10 @@ class DNA:
         result.reverse()
         return ''.join(result)
 
-
-    
+    def hammingDistance(self, compareDNA):
+        count = 0
+        for i, c in enumerate(compareDNA):
+            if c != self.dna[i]:
+                count = count + 1
+        
+        return count
