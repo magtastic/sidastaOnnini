@@ -5,7 +5,6 @@ from DNAPatterns import DNA
 
 DNA_STRING_1 = sys.stdin.readline().strip() #sys.readline() les linu, strip() fjarlægir enter merki
 DNA_STRING_2 = sys.stdin.readline().strip() #sys.readline() les linu, strip() fjarlægir enter merki
-EXPECT = sys.stdin.readline().strip() #sys.readline() les linu, strip() fjarlægir enter merki
 
 myDNA = DNA(DNA_STRING_1)
-print myDNA.hammingDistance(DNA_STRING_2)
+print myDNA.hammingDistance(0, DNA_STRING_2)

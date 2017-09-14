@@ -5,6 +5,7 @@ import numpy as np
 class DNA:
     def __init__(self, dnaString):
         self.dna = dnaString
+        self.length = len(self.dna)
     
     def getString(self):
         return self.dna
@@ -15,7 +16,7 @@ class DNA:
     def count(self, pattern):
         pattLen = len(pattern)
         count = 0
-        for i, _ in enumerate(self.dna[:len(self.dna)-pattLen]):
+        for i in range(self.dna[:self.length-pattLen]):
             if self.text(i,pattLen) == pattern:
                 count = count + 1
         return count
@@ -52,10 +53,20 @@ class DNA:
         result.reverse()
         return ''.join(result)
 
-    def hammingDistance(self, compareDNA):
+    def hammingDistance(self, start, compareDNA):
         count = 0
         for i, c in enumerate(compareDNA):
-            if c != self.dna[i]:
+            if c != self.dna[start + i]:
                 count = count + 1
         
         return count
+
+    def minHammingDistancePositions(self, compareDNA, maxDistance):
+        compateLength = len(compareDNA)
+        indices = []
+        for i in range(self.length - compateLength + 1):
+            distance = self.hammingDistance(i, compareDNA)
+            if distance <= maxDistance:
+                indices.append(i)
+        return indices
+
