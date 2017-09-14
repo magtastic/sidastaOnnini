@@ -11,3 +11,5 @@ EXPECT = sys.stdin.readline().strip() #sys.readline() les linu, strip() fjarlæg
 myDNA = DNA(DNA_STRING)
 indices = myDNA.minHammingDistancePositions(PATTERN, int(MAX_DISTANCE))
 print ' '.join(str(x) for x in indices)
+print EXPECT == ' '.join(str(x) for x in indices)
+print EXPECT
