@@ -70,3 +70,16 @@ class DNA:
                 indices.append(i)
         return indices
 
+    def kMersWithMinHammingDistance(self, k, d):
+        allCounts = []
+        for i in range(self.length):
+            kMer = self.dna[i:i+k]
+            count = 0
+            for j in range(self.length):
+                if self.hammingDistance(j,kMer) <= d:
+                    count = count + 1
+            allCounts.append(count)
+
+        print allCounts
+        return True
+

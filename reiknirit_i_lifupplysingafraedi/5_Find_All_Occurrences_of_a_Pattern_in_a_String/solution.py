@@ -1,6 +1,8 @@
 # coding=utf-8
-import sys
-sys.path.insert(0, '/Users/magtastic/Documents/Skoli/ar4/sidastaOnnini/reiknirit_i_lifupplysingafraedi/0_Helper_Modules')
+import sys, os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = dir_path[:dir_path.rfind('/')] + '/0_Helper_Modules'
+sys.path.insert(0, dir_path)
 from DNAPatterns import DNA
 
 PATTERN = sys.stdin.readline().strip() #sys.readline() les linu, strip() fjarlægir enter merki
