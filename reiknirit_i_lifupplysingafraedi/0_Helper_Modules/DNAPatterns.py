@@ -6,6 +6,7 @@ class DNA:
     def __init__(self, dnaString):
         self.dna = dnaString
         self.length = len(self.dna)
+        self.symbols = ['A','C','G','T']
     
     def getString(self):
         return self.dna
@@ -70,16 +71,31 @@ class DNA:
                 indices.append(i)
         return indices
 
+    def getAllkMersWithMinHammingDistance(self, kMer, d):
+        kMers = []
+        for i, c in enumerate(kMer):
+            potentialSymbols = self.symbols
+            potentialSymbols.remove(c)
+            for j in range(d):
+
+            print c
+
     def kMersWithMinHammingDistance(self, k, d):
-        allCounts = []
-        for i in range(self.length):
+        kMers = []
+        maxCount = 0
+        for i in range(self.length-k):
             kMer = self.dna[i:i+k]
             count = 0
-            for j in range(self.length):
+            for j in range(self.length-k):
                 if self.hammingDistance(j,kMer) <= d:
                     count = count + 1
-            allCounts.append(count)
+            if count == maxCount:
+                if not kMer in kMers:
+                    kMers.append(kMer)
+            elif count > maxCount:
+                kMers = [kMer]
+                maxCount = count
 
-        print allCounts
-        return True
+        self.getAllkMersWithMinHammingDistance(kMer, d)
+        return kMers
 
