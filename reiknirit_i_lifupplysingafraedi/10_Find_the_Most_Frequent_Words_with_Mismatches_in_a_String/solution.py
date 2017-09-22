@@ -13,5 +13,8 @@ K = int(K_AND_D.split()[0])
 D = int(K_AND_D.split()[1])
 myDNA = DNA(DNA_STRING)
 print EXPECT
-kMers = myDNA.kMersWithMinHammingDistance(K,D)
-print ' '.join(kMers)
+# kMers = myDNA.kMersWithMinHammingDistance(K,D)
+# print ' '.join(kMers)
+
+allPossiblekMers = myDNA.getAllPossibleKmers(K)
+print allPossiblekMers  

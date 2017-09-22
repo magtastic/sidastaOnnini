@@ -71,14 +71,29 @@ class DNA:
                 indices.append(i)
         return indices
 
+    def getAllPossibleKmers(self, length):
+        baseKmer = ['A'] * length
+        print baseKmer
+        kMers = []
+        for i in range(length):
+            for j in range(length):
+                for sym in self.symbols:
+                    anotherKmer = baseKmer[:]
+                    anotherKmer[i] = sym
+                    kMers.append(anotherKmer)
+        return kMers
+
     def getAllkMersWithMinHammingDistance(self, kMer, d):
         kMers = []
-        for i, c in enumerate(kMer):
-            potentialSymbols = self.symbols
-            potentialSymbols.remove(c)
-            for j in range(d):
+        for j in range(d):
+            for i, c in enumerate(kMer):
+                potentialSymbols = self.symbols[:]
+                potentialSymbols.remove(c)
+                for sym in potentialSymbols:
+                    kMerWithdiff = kMer
+                    kMerWithdiff[i] = sym
+                    kMers.append(kMer)
 
-            print c
 
     def kMersWithMinHammingDistance(self, k, d):
         kMers = []
