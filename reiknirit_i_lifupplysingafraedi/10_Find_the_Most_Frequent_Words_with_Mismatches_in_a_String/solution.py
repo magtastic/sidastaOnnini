@@ -12,9 +12,14 @@ EXPECT = sys.stdin.readline().strip() #sys.readline() les linu, strip() fjarlæg
 K = int(K_AND_D.split()[0])
 D = int(K_AND_D.split()[1])
 myDNA = DNA(DNA_STRING)
-print EXPECT
 # kMers = myDNA.kMersWithMinHammingDistance(K,D)
 # print ' '.join(kMers)
 
 allPossiblekMers = myDNA.getAllPossibleKmers(K)
-print allPossiblekMers  
+kMers, hammingDistancee = myDNA.kMersWithMinHammingDistance(allPossiblekMers, D)
+print 'DNA:'
+print DNA_STRING
+print 'EXPECT:'
+print EXPECT
+print 'GOT:' 
+print ' '.join(kMers)

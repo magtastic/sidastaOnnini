@@ -1,5 +1,6 @@
 # coding=utf-8
 from collections import defaultdict
+from itertools import product
 import numpy as np
 
 class DNA:
@@ -72,45 +73,30 @@ class DNA:
         return indices
 
     def getAllPossibleKmers(self, length):
-        baseKmer = ['A'] * length
-        print baseKmer
-        kMers = []
-        for i in range(length):
-            for j in range(length):
-                for sym in self.symbols:
-                    anotherKmer = baseKmer[:]
-                    anotherKmer[i] = sym
-                    kMers.append(anotherKmer)
-        return kMers
+        return [''.join(i) for i in product(self.symbols, repeat = length)]
+    
+    def kMersWithMinHammingDistance(self, kMers, minHammingDistance):
+        maxFrequency = 0
+        kMerLength = len(kMers[0])
+        frequentKMers = []
+        for kMer in kMers:
+            frequency = 0
+            for i in range(self.length - kMerLength):
+                hammingDistance = self.hammingDistance(i, kMer)
+                if hammingDistance <= minHammingDistance:
+                    frequency = frequency + 1
+            if frequency > maxFrequency:
+                frequentKMers = [ kMer ]
+                maxFrequency = frequency
+            elif frequency == maxFrequency:
+                frequentKMers.append(kMer)
 
-    def getAllkMersWithMinHammingDistance(self, kMer, d):
-        kMers = []
-        for j in range(d):
-            for i, c in enumerate(kMer):
-                potentialSymbols = self.symbols[:]
-                potentialSymbols.remove(c)
-                for sym in potentialSymbols:
-                    kMerWithdiff = kMer
-                    kMerWithdiff[i] = sym
-                    kMers.append(kMer)
+        print maxFrequency
+        return frequentKMers, maxFrequency
 
 
-    def kMersWithMinHammingDistance(self, k, d):
-        kMers = []
-        maxCount = 0
-        for i in range(self.length-k):
-            kMer = self.dna[i:i+k]
-            count = 0
-            for j in range(self.length-k):
-                if self.hammingDistance(j,kMer) <= d:
-                    count = count + 1
-            if count == maxCount:
-                if not kMer in kMers:
-                    kMers.append(kMer)
-            elif count > maxCount:
-                kMers = [kMer]
-                maxCount = count
+                
 
-        self.getAllkMersWithMinHammingDistance(kMer, d)
-        return kMers
+
+
 
