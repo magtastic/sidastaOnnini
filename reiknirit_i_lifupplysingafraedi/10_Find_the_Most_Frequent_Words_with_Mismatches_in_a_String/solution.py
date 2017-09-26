@@ -7,7 +7,6 @@ from DNAPatterns import DNA
 
 DNA_STRING = sys.stdin.readline().strip() #sys.readline() les linu, strip() fjarlægir enter merki
 K_AND_D = sys.stdin.readline().strip() #sys.readline() les linu, strip() fjarlægir enter merki
-EXPECT = sys.stdin.readline().strip() #sys.readline() les linu, strip() fjarlægir enter merki
 
 K = int(K_AND_D.split()[0])
 D = int(K_AND_D.split()[1])
@@ -16,10 +15,19 @@ myDNA = DNA(DNA_STRING)
 # print ' '.join(kMers)
 
 allPossiblekMers = myDNA.getAllPossibleKmers(K)
-kMers, hammingDistancee = myDNA.kMersWithMinHammingDistance(allPossiblekMers, D)
-print 'DNA:'
-print DNA_STRING
-print 'EXPECT:'
-print EXPECT
-print 'GOT:' 
-print ' '.join(kMers)
+allCounts = []
+for kMer in allPossiblekMers:
+    allCounts.append(myDNA.howOftenkMerAppearsWithMinHammingDistance(kMer, D))
+
+maxCount = 0
+maxKMers = []
+kMersCounts = dict(zip(allPossiblekMers, allCounts))
+for kMer in kMersCounts:
+    print maxCount
+    if kMersCounts[kMer] > maxCount:
+        maxCount = kMersCounts[kMer] 
+        maxKMers = [ kMer ]
+    elif kMersCounts[kMer] == maxCount:
+        maxKMers.append(kMer)
+
+print ' '.join(maxKMers)

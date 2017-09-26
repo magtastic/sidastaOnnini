@@ -72,31 +72,13 @@ class DNA:
                 indices.append(i)
         return indices
 
+    def howOftenkMerAppearsWithMinHammingDistance(self, kMer, minHammingDistance):
+        count = 0
+        for i in range(self.length - len(kMer) + 1):
+            hammingDistance = self.hammingDistance(i, kMer)
+            if hammingDistance <= minHammingDistance:
+                count = count + 1
+        return count
+
     def getAllPossibleKmers(self, length):
         return [''.join(i) for i in product(self.symbols, repeat = length)]
-    
-    def kMersWithMinHammingDistance(self, kMers, minHammingDistance):
-        maxFrequency = 0
-        kMerLength = len(kMers[0])
-        frequentKMers = []
-        for kMer in kMers:
-            frequency = 0
-            for i in range(self.length - kMerLength):
-                hammingDistance = self.hammingDistance(i, kMer)
-                if hammingDistance <= minHammingDistance:
-                    frequency = frequency + 1
-            if frequency > maxFrequency:
-                frequentKMers = [ kMer ]
-                maxFrequency = frequency
-            elif frequency == maxFrequency:
-                frequentKMers.append(kMer)
-
-        print maxFrequency
-        return frequentKMers, maxFrequency
-
-
-                
-
-
-
-
