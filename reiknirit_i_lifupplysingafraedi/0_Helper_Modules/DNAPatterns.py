@@ -63,6 +63,14 @@ class DNA:
         
         return count
 
+    def minHammingDistance(self, kMer):
+        minHammingDistance = len(kMer)
+        for i in range(self.length - len(kMer) + 1):
+            distance = self.hammingDistance(i, kMer)
+            if distance < minHammingDistance:
+                minHammingDistance = distance
+        return minHammingDistance
+
     def minHammingDistancePositions(self, compareDNA, maxDistance):
         compateLength = len(compareDNA)
         indices = []
@@ -78,9 +86,6 @@ class DNA:
             return True
         return False
 
-
-
-
     def howOftenkMerAppearsWithMinHammingDistance(self, kMer, minHammingDistance):
         count = 0
         for i in range(self.length - len(kMer) + 1):
@@ -91,3 +96,9 @@ class DNA:
 
     def getAllPossibleKmers(self, length):
         return [''.join(i) for i in product(self.symbols, repeat = length)]
+
+    def getAllKmersOfLength(self, length):
+        kMers = []
+        for i in range(self.length - length + 1):
+            kMers.append(self.dna[i:i+length])
+        return kMers
