@@ -71,6 +71,15 @@ class DNA:
             if distance <= maxDistance:
                 indices.append(i)
         return indices
+    
+    def kMerExistsWithMaxHammingDistance(self, kMer, D):
+        indices = self.minHammingDistancePositions(kMer, D)
+        if len(indices) > 0:
+            return True
+        return False
+
+
+
 
     def howOftenkMerAppearsWithMinHammingDistance(self, kMer, minHammingDistance):
         count = 0
