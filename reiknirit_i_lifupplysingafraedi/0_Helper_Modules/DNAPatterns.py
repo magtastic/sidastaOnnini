@@ -1,3 +1,4 @@
+from __future__ import division
 # coding=utf-8
 from collections import defaultdict
 from itertools import product
@@ -8,7 +9,7 @@ class DNA:
         self.dna = dnaString
         self.length = len(self.dna)
         self.symbols = ['A','C','G','T']
-    
+
     def getString(self):
         return self.dna
 
@@ -102,3 +103,56 @@ class DNA:
         for i in range(self.length - length + 1):
             kMers.append(self.dna[i:i+length])
         return kMers
+
+    def profielMostProbableKmer(self, k, profile):
+        kMers = self.getAllKmersOfLength(k)
+        mostProbable = 0
+        mostProbablekMer = kMers[0]
+        for kMer in kMers:
+            probability = self.calculateProbabilityOfKmer(kMer, profile)
+            if probability > mostProbable:
+                mostProbable = probability
+                mostProbablekMer = kMer
+        return mostProbablekMer 
+
+    def getSelfMostProbableKmer(self, profile, k):
+        kMers = self.getAllKmersOfLength(k)
+        mostProp = 0
+        result = kMers[0]
+        for kMer in kMers:
+            prop = self.calculateProbabilityOfKmer(kMer, profile)
+            if prop > mostProp:
+                result = kMer
+                mostProp = prop
+
+        return result
+
+    def calculateProbabilityOfKmer(self, kMer, profile):
+        probability = 1
+        for index, symbol in enumerate(kMer):
+            if symbol == 'A':
+                probability = probability * profile[0][index]
+            elif symbol == 'C':
+                probability = probability * profile[1][index]
+            elif symbol == 'G':
+                probability = probability * profile[2][index]
+            elif symbol == 'T':
+                probability = probability * profile[3][index]
+        return probability
+
+    def getProfileFromDNAs(self, dnas, t):
+        dnaLength = len(dnas[0].getString())
+        profile = np.zeros((4, dnaLength))
+        for index in range(dnaLength):
+            for myDna in dnas:
+                dna = myDna.getString()
+                symbol = dna[index]
+                if symbol == 'A':
+                    profile[0][index] = profile[0][index] + 1/t
+                elif symbol == 'C':
+                    profile[1][index] = profile[1][index] + 1/t
+                elif symbol == 'G':
+                    profile[2][index] = profile[2][index] + 1/t
+                elif symbol == 'T':
+                    profile[3][index] = profile[3][index] + 1/t
+        return profile
